@@ -87,6 +87,49 @@
       "home/docker/.local/share/data"
     ]);
 
+  services.btrfs.autoScrub.enable = true;
+  services.btrfs.autoScrub.fileSystems = [
+    "/nix"
+
+    "/persist/etc/nixos"
+    "/persist/etc/ssh"
+
+    "/persist/var/db"
+    "/persist/var/lib"
+    "/persist/var/log"
+
+    "/persist/home/docker/.config/docker"
+    "/persist/home/docker/.local/share/docker"
+    "/persist/home/docker/.local/share/data"
+  ];
+
+  services.snapper.configs =
+    let
+      snapshot = path: {
+        "${builtins.replaceStrings [ "/" ] [ "-" ] path}" = {
+          SUBVOLUME = builtins.toPath "/persist/${path}";
+          TIMELINE_CREATE = true;
+          TIMELINE_CLEANUP = true;
+          TIMETINE_MIN_AGE = 1800;
+          TIMELINE_LIMIT_HOURLY = 6;
+          TIMELIME_DAILY = 7;
+          TIMELINE_WEEKLY = 2;
+          TIMELINE_MONTHLY = 1;
+          TIMELINE_YEARLY = 1;
+        };
+      };
+
+      snapshots = paths: lib.attrsets.mergeAttrsList (lib.lists.forEach paths snapshot);
+    in
+    snapshots [
+      "etc/nixos"
+      "etc/ssh"
+
+      "var/lib"
+
+      "home/docker/.local/share/docker"
+    ];
+
   swapDevices = [ { device = "/dev/disk/by-uuid/1ebc4520-f1aa-45ec-8db3-b10df3f4601d"; } ];
 
   # impersistence
