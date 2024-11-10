@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   imports = [
     ../config/datetime/jp.nix
@@ -17,26 +17,75 @@
   networking.hostName = "nyke";
 
   # filesystem and devices
-  fileSystems."/" = {
-    device = "none";
-    fsType = "tmpfs";
-  };
+  fileSystems =
+    let
+      device = "/dev/disk/by-uuid/128e7466-aa6d-49d5-a79d-3cbcdd6ef836";
+      btrfsOptions = [
+        "compress=zstd"
+        "ssd"
+        "space_cache=v2"
+      ];
+      btrfsNoExec = btrfsOptions ++ [
+        "noexec"
+        "nosuid"
+        "nodev"
+      ];
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/EC4D-6D8D";
-    fsType = "vfat";
-    options = [
-      "fmask=0022"
-      "dmask=0022"
-    ];
-    neededForBoot = true;
-  };
+      subVol = options: path: {
+        "/persist/${path}" = {
+          inherit device;
+          fsType = "btrfs";
+          options = options ++ [ "subvol=/persist/${path}" ];
+          neededForBoot = true;
+        };
+      };
 
-  fileSystems."/persist" = {
-    device = "/dev/disk/by-uuid/668e33b5-4176-4a20-8df6-c7ec5fce073d";
-    fsType = "ext4";
-    neededForBoot = true;
-  };
+      subVolsRW = paths: lib.mergeAttrsList (lib.lists.forEach paths (subVol btrfsNoExec));
+      subVolsEx = paths: lib.mergeAttrsList (lib.lists.forEach paths (subVol btrfsOptions));
+    in
+    {
+      "/" = {
+        device = "none";
+        fsType = "tmpfs";
+        options = [
+          "defaults"
+          "size=256M"
+          "noexec"
+          "mode=0755"
+        ];
+      };
+
+      "/boot" = {
+        device = "/dev/disk/by-uuid/EC4D-6D8D";
+        fsType = "vfat";
+        options = [
+          "fmask=0022"
+          "dmask=0022"
+        ];
+        neededForBoot = true;
+      };
+
+      "/nix" = {
+        inherit device;
+        fsType = "btrfs";
+        options = btrfsOptions ++ [ "subvol=/nix" ];
+        neededForBoot = true;
+      };
+    }
+    // (subVolsRW [
+      "etc/nixos"
+      "etc/ssh"
+
+      "var/db"
+      "var/log"
+      "var/lib"
+
+      "home/docker/.config/docker"
+    ])
+    // (subVolsEx [
+      "home/docker/.local/share/docker"
+      "home/docker/.local/share/data"
+    ]);
 
   swapDevices = [ { device = "/dev/disk/by-uuid/1ebc4520-f1aa-45ec-8db3-b10df3f4601d"; } ];
 
@@ -48,10 +97,6 @@
       "/etc/nixos"
       "/etc/ssh"
 
-      "/home/docker/.local/share/docker"
-
-      "/nix"
-
       "/var/db"
       "/var/lib"
       "/var/log"
@@ -59,5 +104,10 @@
       "/tmp"
     ];
     files = [ "/etc/machine-id" ];
+    users.docker.directories = [
+      ".local/share/docker"
+      ".local/share/data"
+      ".config/docker"
+    ];
   };
 }

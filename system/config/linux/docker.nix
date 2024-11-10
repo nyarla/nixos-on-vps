@@ -3,7 +3,7 @@
   ...
 }:
 let
-  json = builtins.fromJSON (builtins.readFile /etc/nixos/.config.json);
+  json = builtins.fromJSON (builtins.readFile ../../../../../../boot/config.json) ;
 in
 {
   virtualisation.docker.rootless = {
