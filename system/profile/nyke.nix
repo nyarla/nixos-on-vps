@@ -71,6 +71,13 @@
         options = btrfsOptions ++ [ "subvol=/nix" ];
         neededForBoot = true;
       };
+
+      "/tmp" = {
+        inherit device;
+	fsType = "btrfs";
+	options = btrfsOptions ++ ["subvol=/tmp"];
+	neededForBoot = true;
+      };
     }
     // (subVolsRW [
       "etc/nixos"
@@ -143,8 +150,6 @@
       "/var/db"
       "/var/lib"
       "/var/log"
-
-      "/tmp"
     ];
     files = [ "/etc/machine-id" ];
     users.docker.directories = [
