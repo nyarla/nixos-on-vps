@@ -11,6 +11,8 @@
     ../config/tools/common.nix
     ../config/users/console.nix
 
+    ../config/services/nyke.nix
+
     /boot/config/instance.nix
   ];
 
