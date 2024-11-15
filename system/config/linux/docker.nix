@@ -1,10 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-let
-  json = builtins.fromJSON (builtins.readFile ../../../../../../boot/config.json) ;
-in
+{ pkgs, ... }:
 {
   virtualisation.docker.rootless = {
     enable = true;
@@ -22,12 +16,13 @@ in
     enable = true;
     enableGarbageCollect = true;
     garbageCollectDates = "*-*-* 04:00:00";
-    inherit (json.services.dockerRegistry) listenAddress;
   };
 
-  systemd.services.docker-registry.serviceConfig.ExecStartPre = toString (pkgs.writeShellScript "wait.sh" ''
-    while [[ -z "$(${pkgs.tailscale}/bin/tailscale ip | head -n1)" ]]; do
-      sleep 1
-    done
-  '');
+  systemd.services.docker-registry.serviceConfig.ExecStartPre = toString (
+    pkgs.writeShellScript "wait.sh" ''
+      while [[ -z "$(${pkgs.tailscale}/bin/tailscale ip | head -n1)" ]]; do
+        sleep 1
+      done
+    ''
+  );
 }
