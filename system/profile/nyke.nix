@@ -6,11 +6,12 @@
     ../config/linux/docker.nix
     ../config/linux/optimize.nix
     ../config/networking/tailscale.nix
-    ../config/networking/network.nix
     ../config/nixos/nixpkgs.nix
     ../config/security/firewall.nix
     ../config/tools/common.nix
     ../config/users/console.nix
+
+    /boot/config/instance.nix
   ];
 
   # hostname
@@ -74,9 +75,9 @@
 
       "/tmp" = {
         inherit device;
-	fsType = "btrfs";
-	options = btrfsOptions ++ ["subvol=/tmp"];
-	neededForBoot = true;
+        fsType = "btrfs";
+        options = btrfsOptions ++ [ "subvol=/tmp" ];
+        neededForBoot = true;
       };
     }
     // (subVolsRW [
@@ -156,6 +157,7 @@
       ".local/share/docker"
       ".local/share/data"
       ".config/docker"
+      ".kamal"
     ];
   };
 }
