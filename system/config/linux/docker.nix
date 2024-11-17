@@ -12,6 +12,10 @@
     isNormalUser = true;
   };
 
+  # workaround for slirp4netns
+  # See: https://github.com/NixOS/nixpkgs/issues/231191
+  environment.etc."resolv.conf".mode = "direct-symlink";
+
   services.dockerRegistry = {
     enable = true;
     enableGarbageCollect = true;
