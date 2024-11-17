@@ -100,6 +100,7 @@
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [
     "/nix"
+    "/tmp"
 
     "/persist/etc/nixos"
     "/persist/etc/ssh"
@@ -133,11 +134,10 @@
     in
     snapshots [
       "etc/nixos"
-      "etc/ssh"
 
       "var/lib"
 
-      "home/docker/.local/share/docker"
+      "home/docker/.local/share/data"
     ];
 
   swapDevices = [ { device = "/dev/disk/by-uuid/1ebc4520-f1aa-45ec-8db3-b10df3f4601d"; } ];
@@ -156,10 +156,11 @@
     ];
     files = [ "/etc/machine-id" ];
     users.docker.directories = [
-      ".local/share/docker"
-      ".local/share/data"
       ".config/docker"
+      ".docker"
       ".kamal"
+      ".local/share/data"
+      ".local/share/docker"
     ];
   };
 }
