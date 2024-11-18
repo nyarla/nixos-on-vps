@@ -83,18 +83,19 @@
       };
     }
     // (subVolsRW [
+      "etc"
       "etc/nixos"
-      "etc/ssh"
 
       "var/db"
       "var/log"
       "var/lib"
 
-      "home/docker/.config/docker"
+      "home/docker"
+      "home/docker/.kamal"
     ])
     // (subVolsEx [
-      "home/docker/.local/share/docker"
       "home/docker/.local/share/data"
+      "home/docker/.local/share/docker"
     ]);
 
   services.btrfs.autoScrub.enable = true;
@@ -103,15 +104,15 @@
     "/tmp"
 
     "/persist/etc/nixos"
-    "/persist/etc/ssh"
 
     "/persist/var/db"
     "/persist/var/lib"
     "/persist/var/log"
 
-    "/persist/home/docker/.config/docker"
-    "/persist/home/docker/.local/share/docker"
+    "/persist/home/docker/.kamal"
+
     "/persist/home/docker/.local/share/data"
+    "/persist/home/docker/.local/share/docker"
   ];
 
   services.snapper.configs =
@@ -134,9 +135,8 @@
     in
     snapshots [
       "etc/nixos"
-
       "var/lib"
-
+      "home/docker/.local/share/docker/volumes"
       "home/docker/.local/share/data"
     ];
 

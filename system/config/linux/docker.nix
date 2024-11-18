@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   virtualisation.docker.rootless = {
     enable = true;
@@ -8,8 +8,12 @@
     };
   };
 
+  users.groups.docker = {};
   users.users.docker = {
+    group = "docker";
+    extraGroups = lib.mkForce [];
     isNormalUser = true;
+    linger = true;
   };
 
   # workaround for slirp4netns
