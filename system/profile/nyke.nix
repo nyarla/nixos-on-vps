@@ -14,6 +14,7 @@
     ../config/services/nyke.nix
 
     /boot/config/instance.nix
+    /boot/config/cloudflared.nix
   ];
 
   # hostname
