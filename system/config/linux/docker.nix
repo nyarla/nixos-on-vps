@@ -8,10 +8,10 @@
     };
   };
 
-  users.groups.docker = {};
+  users.groups.docker = { };
   users.users.docker = {
     group = "docker";
-    extraGroups = lib.mkForce [];
+    extraGroups = lib.mkForce [ ];
     isNormalUser = true;
     linger = true;
   };

@@ -53,20 +53,21 @@ _: {
       };
 
       "http://kalaclista.com:9080" = {
-        listenAddresses = ["127.0.0.1"];
-	logFormat = ''
+        listenAddresses = [ "127.0.0.1" ];
+        logFormat = ''
           output stdout
-	'';
-	extraConfig = ''
-	  root * /var/lib/www/kalaclista.com
-	  @exists file
-	  handle @exists {
-            header /.well-known/nostr.json Access-Control-Allow-Origin "*"
-	    file_server
-	  }
+        '';
+        extraConfig = ''
+          root * /var/lib/www/kalaclista.com
 
-	  reverse_proxy 0.0.0.0:8080
-	'';
+          @exists file
+          handle @exists {
+            header /.well-known/nostr.json Access-Control-Allow-Origin "*"
+            file_server
+          }
+
+          reverse_proxy 0.0.0.0:8080
+        '';
       };
     };
   };
