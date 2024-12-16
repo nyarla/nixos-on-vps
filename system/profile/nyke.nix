@@ -87,6 +87,8 @@
       "etc"
       "etc/nixos"
 
+      "root"
+
       "var/db"
       "var/log"
       "var/lib"
@@ -154,6 +156,8 @@
       "/var/db"
       "/var/lib"
       "/var/log"
+
+      "/root"
     ];
     files = [ "/etc/machine-id" ];
     users.docker.directories = [
