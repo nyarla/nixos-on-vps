@@ -13,8 +13,7 @@
 
     ../config/services/nyke.nix
 
-    /boot/config/instance.nix
-    /boot/config/cloudflared.nix
+    /etc/secrets/system/nyke.nix
   ];
 
   # hostname
@@ -152,6 +151,7 @@
     directories = [
       "/etc/nixos"
       "/etc/ssh"
+      "/etc/secrets"
 
       "/var/db"
       "/var/lib"
