@@ -25,6 +25,11 @@
         nyke = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            (_: {
+              nixpkgs.overlays = [
+                (import ./pkgs/default.nix)
+              ];
+            })
             impermanence.nixosModules.impermanence
             sensitive.nixosModules.nyke
             ./system/profile/nyke.nix
