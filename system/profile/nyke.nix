@@ -12,8 +12,12 @@
     ../config/users/console.nix
 
     ../config/services/nyke.nix
+  ];
 
-    /etc/secrets/system/nyke.nix
+  # nix
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
   ];
 
   # hostname
