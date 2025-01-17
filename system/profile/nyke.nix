@@ -14,12 +14,6 @@
     ../config/services/nyke.nix
   ];
 
-  # nix
-  nix.settings.trusted-users = [
-    "root"
-    "@wheel"
-  ];
-
   # hostname
   networking.hostName = "nyke";
 

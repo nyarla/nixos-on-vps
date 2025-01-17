@@ -4,5 +4,10 @@ _: {
     "flakes"
   ];
 
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+  ];
+
   system.stateVersion = "24.05";
 }
