@@ -1,4 +1,5 @@
-_: {
+{ config, ... }:
+{
   services.caddy = {
     enable = true;
     globalConfig = ''
@@ -41,17 +42,21 @@ _: {
         logFormat = ''
           output stdout
         '';
-        extraConfig = ''
-          root * /var/lib/www/kalaclista.com
+        extraConfig =
+          let
+            address = with config.services.gotosocial.settings; "${bind-address}:${toString port}";
+          in
+          ''
+            root * /var/lib/www/kalaclista.com
 
-          @exists file
-          handle @exists {
-            header /.well-known/nostr.json Access-Control-Allow-Origin "*"
-            file_server
-          }
+            @exists file
+            handle @exists {
+              header /.well-known/nostr.json Access-Control-Allow-Origin "*"
+              file_server
+            }
 
-          reverse_proxy 127.0.0.1:10080
-        '';
+            reverse_proxy ${address}
+          '';
       };
     };
   };
