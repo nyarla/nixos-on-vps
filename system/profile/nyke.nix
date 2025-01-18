@@ -11,8 +11,7 @@
     ../config/tools/common.nix
     ../config/users/console.nix
 
-    ../config/services/nyke.nix
-
+    ../nodes/nyke/caddy.nix
     ../nodes/nyke/gotosocial.nix
     ../nodes/nyke/litestream.nix
     ../nodes/nyke/mackerel.nix
