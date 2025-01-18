@@ -12,6 +12,7 @@
     ../config/users/console.nix
 
     ../config/services/nyke.nix
+    ../nodes/nyke/mackerel.nix
   ];
 
   # hostname
