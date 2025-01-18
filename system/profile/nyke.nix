@@ -13,6 +13,7 @@
 
     ../config/services/nyke.nix
 
+    ../nodes/nyke/gotosocial.nix
     ../nodes/nyke/litestream.nix
     ../nodes/nyke/mackerel.nix
   ];
