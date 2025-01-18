@@ -12,6 +12,7 @@
     ../config/users/console.nix
 
     ../nodes/nyke/caddy.nix
+    ../nodes/nyke/freshrss.nix
     ../nodes/nyke/gotosocial.nix
     ../nodes/nyke/litestream.nix
     ../nodes/nyke/mackerel.nix
