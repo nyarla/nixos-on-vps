@@ -11,6 +11,7 @@
     ../config/tools/common.nix
     ../config/users/console.nix
 
+    ../nodes/nyke/albyhub.nix
     ../nodes/nyke/caddy.nix
     ../nodes/nyke/freshrss.nix
     ../nodes/nyke/gotosocial.nix

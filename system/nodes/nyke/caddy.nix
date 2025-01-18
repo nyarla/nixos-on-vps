@@ -53,7 +53,7 @@
             output stdout
           '';
           extraConfig = ''
-            reverse_proxy 0.0.0.0:8080
+            reverse_proxy 127.0.0.1:12080
           '';
         };
 
