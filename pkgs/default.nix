@@ -4,4 +4,5 @@ let
 in
 {
   gotosocial = require ./gotosocial { };
+  litestream = require ./litestream { };
 }

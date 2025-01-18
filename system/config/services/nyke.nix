@@ -1,4 +1,4 @@
-{ ... }:
+{ config, lib, ... }:
 {
   services.mackerel-agent = {
     enable = true;
@@ -13,6 +13,28 @@
       interfaces = {
         ignore = "ens[45]";
       };
+    };
+  };
+
+  systemd.services.litestream.serviceConfig.User = lib.mkForce "root";
+  systemd.services.litestream.serviceConfig.Group = lib.mkForce "root";
+  services.litestream = {
+    enable = true;
+    environmentFile = "/etc/secrets/litestream/env";
+    settings = {
+      dbs = [
+        {
+          path = config.services.gotosocial.settings.db-address;
+          replicas = [
+            {
+              url = "\${GOTOSOCIAL_S3_URL}";
+              endpoint = "\${GOTOSOCIAL_S3_ENDPOINT}";
+              access-key-id = "\${GOTOSOCIAL_S3_ACCESS_KEY_ID}";
+              secret-access-key = "\${GOTOSOCIAL_S3_SECRET_ACCESS_KEY}";
+            }
+          ];
+        }
+      ];
     };
   };
 
