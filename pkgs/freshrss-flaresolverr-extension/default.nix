@@ -9,4 +9,8 @@ freshrss-extensions.buildFreshRssExtension {
     rev = "46f625f102e319b7c0d155615622abe095a6ddde";
     hash = "sha256-zxMmY/uXvIi3Ou4kxb6Gac7DAv8rtFilzz6h5l/B2wo=";
   };
+
+  preBuild = ''
+    sed -i "s/\$filename = 'cloudsolver.php';/return true;/" extension.php
+  '';
 }
