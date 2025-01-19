@@ -1,4 +1,5 @@
-_: {
+{ pkgs, ... }:
+{
   services.pixelfed = {
     enable = true;
     domain = "px.kalaclista.com";
@@ -23,6 +24,7 @@ _: {
     secretFile = "/etc/secrets/pixelfed/env";
     database.createLocally = true;
     redis.createLocally = true;
+    phpPackage = pkgs.php83;
 
     nginx = {
       listen = [
