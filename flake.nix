@@ -41,6 +41,7 @@
         hostname = "nyke";
         sshUser = "console";
         interactiveSudo = true;
+        activationTimeout = 600;
 
         profiles.system = {
           user = "root";
