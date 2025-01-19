@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
   virtualHost = "reader.nyke.server.thotep.net";
 in
@@ -12,6 +12,10 @@ in
 
     defaultUser = "kalaclista";
     passwordFile = "/etc/secrets/freshrss/kalaclista";
+
+    extensions = with pkgs; [
+      freshrss-flaresolverr-extension
+    ];
   };
 
   services.nginx.virtualHosts."${virtualHost}".listen = [
