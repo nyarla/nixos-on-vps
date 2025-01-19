@@ -17,6 +17,7 @@
     ../nodes/nyke/gotosocial.nix
     ../nodes/nyke/litestream.nix
     ../nodes/nyke/mackerel.nix
+    ../nodes/nyke/pixelfed.nix
   ];
 
   # hostname
