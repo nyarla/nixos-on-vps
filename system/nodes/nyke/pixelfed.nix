@@ -8,16 +8,12 @@
       OPEN_REGISTRATION = false;
       ENFORCE_EMAIL_VERIFICATION = true;
 
-      # Temporary disabled
-      ACTIVITY_PUB = false;
-      OAUTH_ENABLED = false;
-
       # Instance configurations
       APP_NAME = "kalaclista.px";
       APP_LOCALE = "ja";
 
-      INSTANCE_DESCRIPTION = "「輝かしい青春」なんて失かった人の思い出。画像が投稿される";
-      INSTANCE_CONTACT_EMAIL = "nyarla@kalaclista.com";
+      ACTIVITY_PUB = true;
+      OAUTH_ENABLED = true;
 
       PF_LOCAL_AVATAR_TO_CLOUD = true;
     };
