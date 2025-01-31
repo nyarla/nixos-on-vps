@@ -89,8 +89,6 @@
     }
     // (subVolsRW [
       "etc"
-      "etc/nixos"
-
       "root"
 
       "var/db"
@@ -102,8 +100,6 @@
   services.btrfs.autoScrub.fileSystems = [
     "/nix"
     "/tmp"
-
-    "/persist/etc/nixos"
 
     "/persist/var/db"
     "/persist/var/lib"
@@ -129,7 +125,6 @@
       snapshots = paths: lib.attrsets.mergeAttrsList (lib.lists.forEach paths snapshot);
     in
     snapshots [
-      "etc/nixos"
       "var/lib"
     ];
 
@@ -140,7 +135,6 @@
     enable = true;
     hideMounts = true;
     directories = [
-      "/etc/nixos"
       "/etc/ssh"
       "/etc/secrets"
       "/etc/backup"
