@@ -42,6 +42,7 @@
         sshUser = "console";
         interactiveSudo = true;
         activationTimeout = 600;
+        confirmTimeout = 120;
 
         profiles.system = {
           user = "root";
