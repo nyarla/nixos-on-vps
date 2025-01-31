@@ -18,6 +18,8 @@
     ../nodes/nyke/litestream.nix
     ../nodes/nyke/mackerel.nix
     ../nodes/nyke/pixelfed.nix
+
+    ../nodes/nyke/backup.nix
   ];
 
   # hostname
@@ -156,6 +158,7 @@
       "/etc/nixos"
       "/etc/ssh"
       "/etc/secrets"
+      "/etc/backup"
 
       "/var/db"
       "/var/lib"
