@@ -3,7 +3,6 @@
   imports = [
     ../config/datetime/jp.nix
     ../config/hardware/sakura.nix
-    ../config/linux/docker.nix
     ../config/linux/optimize.nix
     ../config/networking/tailscale.nix
     ../config/nixos/nixpkgs.nix
@@ -97,13 +96,6 @@
       "var/db"
       "var/log"
       "var/lib"
-
-      "home/docker"
-      "home/docker/.kamal"
-    ])
-    // (subVolsEx [
-      "home/docker/.local/share/data"
-      "home/docker/.local/share/docker"
     ]);
 
   services.btrfs.autoScrub.enable = true;
@@ -116,11 +108,6 @@
     "/persist/var/db"
     "/persist/var/lib"
     "/persist/var/log"
-
-    "/persist/home/docker/.kamal"
-
-    "/persist/home/docker/.local/share/data"
-    "/persist/home/docker/.local/share/docker"
   ];
 
   services.snapper.configs =
@@ -144,8 +131,6 @@
     snapshots [
       "etc/nixos"
       "var/lib"
-      "home/docker/.local/share/docker/volumes"
-      "home/docker/.local/share/data"
     ];
 
   swapDevices = [ { device = "/dev/disk/by-uuid/1ebc4520-f1aa-45ec-8db3-b10df3f4601d"; } ];
@@ -167,12 +152,5 @@
       "/root"
     ];
     files = [ "/etc/machine-id" ];
-    users.docker.directories = [
-      ".config/docker"
-      ".docker"
-      ".kamal"
-      ".local/share/data"
-      ".local/share/docker"
-    ];
   };
 }
