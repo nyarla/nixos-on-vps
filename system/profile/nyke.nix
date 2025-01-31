@@ -153,4 +153,8 @@
     ];
     files = [ "/etc/machine-id" ];
   };
+
+  environment.systemPackages = with pkgs; [
+    reboot-nyke
+  ];
 }

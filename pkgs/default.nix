@@ -24,4 +24,6 @@ rec {
 
     vendorHash = "sha256-QkkSnQb9haH8SiXyLSS58VXSD4op7Hr4Z6vUAAYLIic=";
   });
+
+  reboot-nyke = require ./reboot-nyke { };
 }
