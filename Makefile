@@ -4,6 +4,9 @@ all:
 build:
 	@nix-build
 
+shell: build
+	nix shell nixpkgs#deploy-rs
+
 bump: build
 	result/bin/nix flake update
 
