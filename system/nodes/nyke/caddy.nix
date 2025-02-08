@@ -47,19 +47,25 @@
             address = "${addr}:${toString port}";
           };
 
-        searx = rec {
-          hostname = "search.nyke.server.thotep.net";
-          addr = config.services.searx.settings.server.bind_address;
-          inherit (config.services.searx.settings.server) port;
-          address = "${addr}:${toString port}";
-        };
+        searx =
+          listen {
+            domain = "${vars.searx.app.domain}";
+            addr = config.services.searx.settings.server.bind_address;
+            inherit (config.services.searx.settings.server) port;
+          }
+          // {
+            inherit (vars.searx) endpoint;
+          };
 
-        open-webui = rec {
-          hostname = "chat.nyke.server.thotep.net";
-          addr = config.services.open-webui.host;
-          inherit (config.services.open-webui) port;
-          address = "${addr}:${toString port}";
-        };
+        open-webui =
+          listen {
+            inherit (vars.open-webui.endpoint) domain;
+            addr = config.services.open-webui.host;
+            inherit (config.services.open-webui) port;
+          }
+          // {
+            inherit (vars.open-webui) endpoint;
+          };
       in
       {
         # Public services
@@ -105,25 +111,27 @@
           '';
         };
 
-        "${searx.hostname}" = {
-          listenAddresses = [ "100.72.114.65" ];
+        # Private services
+        # ================
+        "${searx.endpoint.domain}" = {
+          listenAddresses = [ searx.endpoint.addr ];
           useACMEHost = "nyke.server.thotep.net";
           logFormat = ''
             output stdout
           '';
           extraConfig = ''
-            reverse_proxy ${searx.address}
+            reverse_proxy ${searx.listen}
           '';
         };
 
-        "${open-webui.hostname}" = {
-          listenAddresses = [ "100.72.114.65" ];
+        "${open-webui.endpoint.domain}" = {
+          listenAddresses = [ open-webui.endpoint.addr ];
           useACMEHost = "nyke.server.thotep.net";
           logFormat = ''
             output stdout
           '';
           extraConfig = ''
-            reverse_proxy ${open-webui.address}
+            reverse_proxy ${open-webui.listen}
           '';
         };
 

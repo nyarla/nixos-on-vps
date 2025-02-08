@@ -1,9 +1,19 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  specialArgs,
+  ...
+}:
+let
+  webui = specialArgs.vars.open-webui.app;
+  searx = specialArgs.vars.searx.app;
+in
 {
   # Open Web UI
   services.open-webui = {
     enable = true;
-    port = 14080;
+    host = webui.addr;
+    inherit (webui) port;
     environmentFile = "/etc/secrets/open-webui/env";
   };
 
@@ -39,9 +49,9 @@
       };
 
       server = {
-        base_url = "https://search.nyke.server.thotep.net";
-        port = 15080;
-        bind_address = "127.0.0.1";
+        base_url = "${searx.https}";
+        inherit (searx) port;
+        bind_address = searx.addr;
         limiter = false;
       };
 

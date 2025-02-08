@@ -73,13 +73,13 @@ in
       domain = "search.nyke.server.thotep.net";
     in
     {
-      app = {
+      app = listen {
         inherit domain;
         addr = localhost;
         port = 30080;
       };
 
-      endpoint = {
+      endpoint = listen {
         inherit domain;
         addr = internal;
         port = 40080;
@@ -91,13 +91,13 @@ in
       domain = "chat.nyke.server.thotep.net";
     in
     {
-      app = {
+      app = listen {
         inherit domain;
         addr = localhost;
         port = 30180;
       };
 
-      endpoint = {
+      endpoint = listen {
         inherit domain;
         addr = internal;
         port = 40180;
