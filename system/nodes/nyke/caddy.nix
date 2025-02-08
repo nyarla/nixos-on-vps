@@ -90,16 +90,6 @@
           '';
         };
 
-        "registry.nyke.server.thotep.net" = {
-          listenAddresses = [ "100.72.114.65" ];
-          useACMEHost = "nyke.server.thotep.net";
-          logFormat = ''
-            output stdout
-          '';
-          extraConfig = ''
-            reverse_proxy 127.0.0.1:5000
-          '';
-        };
         "${freshrss.hostname}" = {
           listenAddresses = [ "100.72.114.65" ];
           useACMEHost = "nyke.server.thotep.net";
@@ -132,17 +122,6 @@
           '';
           extraConfig = ''
             reverse_proxy ${open-webui.listen}
-          '';
-        };
-
-        "albyhub.nyke.server.thotep.net" = {
-          listenAddresses = [ "100.72.114.65" ];
-          useACMEHost = "nyke.server.thotep.net";
-          logFormat = ''
-            output stdout
-          '';
-          extraConfig = ''
-            reverse_proxy 127.0.0.1:12080
           '';
         };
       };
