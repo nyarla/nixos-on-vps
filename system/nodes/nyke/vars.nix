@@ -56,7 +56,7 @@ in
       domain = "albyhub.thotep.net";
     in
     {
-      endpoint = {
+      endpoint = listen {
         inherit domain;
         addr = localhost;
         port = 29080;
