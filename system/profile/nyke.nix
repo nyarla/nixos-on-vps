@@ -12,6 +12,7 @@
 
     ../nodes/nyke/albyhub.nix
     ../nodes/nyke/caddy.nix
+    ../nodes/nyke/chat.nix
     ../nodes/nyke/freshrss.nix
     ../nodes/nyke/gotosocial.nix
     ../nodes/nyke/litestream.nix

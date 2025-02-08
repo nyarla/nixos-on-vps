@@ -32,6 +32,20 @@
           inherit (settings) port;
           address = "${addr}:${toString port}";
         };
+
+        searx = rec {
+          hostname = "search.nyke.server.thotep.net";
+          addr = config.services.searx.settings.server.bind_address;
+          inherit (config.services.searx.settings.server) port;
+          address = "${addr}:${toString port}";
+        };
+
+        open-webui = rec {
+          hostname = "chat.nyke.server.thotep.net";
+          addr = config.services.open-webui.host;
+          inherit (config.services.open-webui) port;
+          address = "${addr}:${toString port}";
+        };
       in
       {
         "registry.nyke.server.thotep.net" = {
@@ -54,6 +68,29 @@
             reverse_proxy ${freshrss.address}
           '';
         };
+
+        "${searx.hostname}" = {
+          listenAddresses = [ "100.72.114.65" ];
+          useACMEHost = "nyke.server.thotep.net";
+          logFormat = ''
+            output stdout
+          '';
+          extraConfig = ''
+            reverse_proxy ${searx.address}
+          '';
+        };
+
+        "${open-webui.hostname}" = {
+          listenAddresses = [ "100.72.114.65" ];
+          useACMEHost = "nyke.server.thotep.net";
+          logFormat = ''
+            output stdout
+          '';
+          extraConfig = ''
+            reverse_proxy ${open-webui.address}
+          '';
+        };
+
         "albyhub.nyke.server.thotep.net" = {
           listenAddresses = [ "100.72.114.65" ];
           useACMEHost = "nyke.server.thotep.net";
