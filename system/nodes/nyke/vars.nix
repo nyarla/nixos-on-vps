@@ -56,12 +56,6 @@ in
       domain = "albyhub.thotep.net";
     in
     {
-      app = {
-        inherit domain;
-        addr = localhost;
-        port = 19080;
-      };
-
       endpoint = {
         inherit domain;
         addr = localhost;

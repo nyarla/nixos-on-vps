@@ -1,9 +1,14 @@
-_: {
+{ specialArgs, ... }:
+let
+  inherit (specialArgs.vars.albyhub.endpoint) addr port;
+  listen = "${addr}:${toString port}";
+in
+{
   virtualisation.oci-containers.containers."albyhub" = {
     autoStart = true;
     image = "ghcr.io/getalby/hub:v1.13.0";
     ports = [
-      "127.0.0.1:12080:8080"
+      "${listen}:8080"
     ];
     environment = {
       DATABASE_URI = "/data/nwc.db";
