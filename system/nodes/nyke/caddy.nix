@@ -25,6 +25,9 @@
 
         # Public services
         # ===============
+
+        # GoToSocial
+        # ----------
         gotosocial =
           (
             with config.services.gotosocial;
@@ -40,6 +43,9 @@
 
         # Private services
         # ================
+
+        # Search and Chat
+        # ---------------
         searx =
           listen {
             domain = "${vars.searx.app.domain}";
@@ -60,6 +66,8 @@
             inherit (vars.open-webui) endpoint;
           };
 
+        # RSS Reader
+        # ----------
         freshrss =
           let
             inherit (config.services.freshrss) virtualHost;
@@ -73,6 +81,17 @@
           // {
             inherit (vars.freshrss) endpoint;
           };
+
+        # Common settings
+        # ===============
+
+        # Let's encrypt certificate
+        useACMEHost = "nyke.server.thotep.net";
+
+        # TODO: persistent logs
+        logFormat = ''
+          output stdout
+        '';
       in
       {
         # Public services
@@ -81,9 +100,7 @@
         # GoToSocial
         "${gotosocial.endpoint.http}:${toString gotosocial.endpoint.port}" = {
           listenAddresses = [ gotosocial.endpoint.addr ];
-          logFormat = ''
-            output stdout
-          '';
+          inherit logFormat;
           extraConfig = ''
             root * /var/lib/www/kalaclista.com
 
@@ -101,10 +118,8 @@
         # ================
         "${searx.endpoint.domain}" = {
           listenAddresses = [ searx.endpoint.addr ];
-          useACMEHost = "nyke.server.thotep.net";
-          logFormat = ''
-            output stdout
-          '';
+          inherit useACMEHost;
+          inherit logFormat;
           extraConfig = ''
             reverse_proxy ${searx.listen}
           '';
@@ -112,10 +127,8 @@
 
         "${open-webui.endpoint.domain}" = {
           listenAddresses = [ open-webui.endpoint.addr ];
-          useACMEHost = "nyke.server.thotep.net";
-          logFormat = ''
-            output stdout
-          '';
+          inherit useACMEHost;
+          inherit logFormat;
           extraConfig = ''
             reverse_proxy ${open-webui.listen}
           '';
@@ -123,10 +136,8 @@
 
         "${freshrss.endpoint.domain}" = {
           listenAddresses = [ freshrss.endpoint.addr ];
-          useACMEHost = "nyke.server.thotep.net";
-          logFormat = ''
-            output stdout
-          '';
+          inherit useACMEHost;
+          inherit logFormat;
           extraConfig = ''
             reverse_proxy ${freshrss.listen}
           '';
