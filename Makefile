@@ -7,6 +7,9 @@ build:
 shell: build
 	nix shell nixpkgs#deploy-rs
 
+sensitive: build
+	result/bin/nix flake update sensitive
+
 bump: build
 	result/bin/nix flake update
 
