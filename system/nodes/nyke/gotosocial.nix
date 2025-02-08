@@ -1,4 +1,8 @@
-_: {
+{ specialArgs, ... }:
+let
+  inherit (specialArgs.vars.gotosocial) app;
+in
+{
   services.gotosocial = {
     enable = true;
     settings = {
@@ -9,11 +13,11 @@ _: {
       application-name = "カラクリスタ？";
       landing-page-user = "nyarla";
 
-      host = "kalaclista.com";
-      account-domain = "kalaclista.com";
+      host = app.domain;
+      account-domain = app.domain;
 
-      bind-address = "127.0.0.1";
-      port = 10080;
+      bind-address = app.addr;
+      inherit (app) port;
 
       trusted-proxies = [
         "127.0.0.1"

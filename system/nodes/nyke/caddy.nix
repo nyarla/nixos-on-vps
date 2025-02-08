@@ -1,4 +1,9 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  specialArgs,
+  ...
+}:
 {
   systemd.services.caddy.serviceConfig.ExecStartPre = toString (
     pkgs.writeShellScript "wait.sh" ''
@@ -15,6 +20,22 @@
     '';
     virtualHosts =
       let
+        inherit (specialArgs) vars;
+        inherit (vars) listen;
+
+        gotosocial =
+          (
+            with config.services.gotosocial;
+            listen {
+              domain = settings.host;
+              addr = settings.bind-address;
+              inherit (settings) port;
+            }
+          )
+          // {
+            inherit (vars.gotosocial) endpoint;
+          };
+
         freshrss =
           let
             hostname = config.services.freshrss.virtualHost;
@@ -25,13 +46,6 @@
             inherit (listen) addr port;
             address = "${addr}:${toString port}";
           };
-
-        gotosocial = with config.services.gotosocial; rec {
-          hostname = settings.host;
-          addr = settings.bind-address;
-          inherit (settings) port;
-          address = "${addr}:${toString port}";
-        };
 
         searx = rec {
           hostname = "search.nyke.server.thotep.net";
@@ -48,6 +62,28 @@
         };
       in
       {
+        # Public services
+        # ===============
+
+        # GoToSocial
+        "${gotosocial.endpoint.http}:${toString gotosocial.endpoint.port}" = {
+          listenAddresses = [ gotosocial.endpoint.addr ];
+          logFormat = ''
+            output stdout
+          '';
+          extraConfig = ''
+            root * /var/lib/www/kalaclista.com
+
+            @exists file
+            handle @exists {
+              header /.well-known/nostr.json Access-Control-Allow-Origin "*"
+              file_server
+            }
+
+            reverse_proxy ${gotosocial.listen}
+          '';
+        };
+
         "registry.nyke.server.thotep.net" = {
           listenAddresses = [ "100.72.114.65" ];
           useACMEHost = "nyke.server.thotep.net";
@@ -99,25 +135,6 @@
           '';
           extraConfig = ''
             reverse_proxy 127.0.0.1:12080
-          '';
-        };
-
-        # GoToSocial
-        "http://${gotosocial.hostname}:9080" = {
-          listenAddresses = [ "127.0.0.1" ];
-          logFormat = ''
-            output stdout
-          '';
-          extraConfig = ''
-            root * /var/lib/www/kalaclista.com
-
-            @exists file
-            handle @exists {
-              header /.well-known/nostr.json Access-Control-Allow-Origin "*"
-              file_server
-            }
-
-            reverse_proxy ${gotosocial.address}
           '';
         };
       };

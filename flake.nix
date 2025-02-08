@@ -24,6 +24,9 @@
       nixosConfigurations = {
         nyke = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = {
+            vars = import ./system/nodes/nyke/vars.nix;
+          };
           modules = [
             (_: {
               nixpkgs.overlays = [
