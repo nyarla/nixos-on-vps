@@ -1,8 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, specialArgs, ... }:
+let
+  inherit (specialArgs.vars.pixelfed) endpoint;
+in
 {
   services.pixelfed = {
     enable = true;
-    domain = "px.kalaclista.com";
+    inherit (endpoint) domain;
     settings = {
       # Permanentally disabled
       OPEN_REGISTRATION = false;
@@ -25,8 +28,7 @@
     nginx = {
       listen = [
         {
-          addr = "127.0.0.1";
-          port = 13080;
+          inherit (endpoint) addr port;
         }
       ];
     };

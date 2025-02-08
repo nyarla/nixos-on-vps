@@ -44,12 +44,6 @@ in
       domain = "px.kalaclista.com";
     in
     {
-      app = listen {
-        inherit domain;
-        addr = localhost;
-        port = 10180;
-      };
-
       endpoint = listen {
         inherit domain;
         addr = localhost;
