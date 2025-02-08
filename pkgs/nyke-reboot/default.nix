@@ -1,8 +1,13 @@
 { writeShellScriptBin }:
-writeShellScriptBin "reboot-nyke" ''
+writeShellScriptBin "nyke-reboot" ''
   stop() {
     sudo systemctl stop $@
   }
+
+  if [[ "$(hostname)" != "nyke" ]]; then
+    echo 'This machine is not `nyke`.' >&2;
+    exit 1
+  fi
 
   sudo echo 'Reboot system'
 

@@ -150,6 +150,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    reboot-nyke
+    nyke-reboot
   ];
 }
