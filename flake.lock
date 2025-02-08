@@ -74,7 +74,8 @@
         "deploy-rs": "deploy-rs",
         "impermanence": "impermanence",
         "nixpkgs": "nixpkgs",
-        "sensitive": "sensitive"
+        "sensitive": "sensitive",
+        "unstable": "unstable"
       }
     },
     "sensitive": {
@@ -104,6 +105,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "unstable": {
+      "locked": {
+        "lastModified": 1738966365,
+        "narHash": "sha256-jqSajUVKkdzxSBGiG2E5qapxmfFKLjw2LqsH56C8e34=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "dd81bdc4a4df6e40c1ffef98bf4dc82a890b3bb2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable-small",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },

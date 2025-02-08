@@ -7,12 +7,6 @@ rec {
   gotosocial = require ./gotosocial { };
   litestream = require ./litestream { };
 
-  freshrss = prev.freshrss.overrideAttrs (_: {
-    postInstall = ''
-      cp ${freshrss-flaresolverr-extension}/share/freshrss/extensions/xExtension-FlareSolverr/cloudsolver.php $out/p/api/
-    '';
-  });
-
   pixelfed = (prev.pixelfed.override { php = prev.php83; }).overrideAttrs (_: {
     version = "0.12.4";
     src = prev.fetchFromGitHub {

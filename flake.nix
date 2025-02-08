@@ -3,6 +3,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
 
+    unstable.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+
     impermanence.url = "github:nix-community/impermanence";
 
     deploy-rs.url = "github:serokell/deploy-rs";
@@ -15,6 +17,7 @@
     {
       self,
       nixpkgs,
+      unstable,
       impermanence,
       deploy-rs,
       sensitive,
@@ -31,6 +34,7 @@
             (_: {
               nixpkgs.overlays = [
                 (import ./pkgs/default.nix)
+                (import ./pkgs/unstable.nix { inherit (unstable.legacyPackages."x86_64-linux") pkgs; })
               ];
             })
             impermanence.nixosModules.impermanence
