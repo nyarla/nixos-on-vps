@@ -67,7 +67,6 @@ in
   # ================
   # port 3xx80 -> internal port
   # port 4xx80 -> public connection
-
   searx =
     let
       domain = "search.nyke.server.thotep.net";
@@ -101,6 +100,18 @@ in
         inherit domain;
         addr = internal;
         port = 40180;
+      };
+    };
+
+  freshrss =
+    let
+      domain = "reader.nyke.server.thotep.net";
+    in
+    {
+      endpoint = listen {
+        inherit domain;
+        addr = internal;
+        port = 40280;
       };
     };
 }

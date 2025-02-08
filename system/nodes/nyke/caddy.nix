@@ -23,6 +23,8 @@
         inherit (specialArgs) vars;
         inherit (vars) listen;
 
+        # Public services
+        # ===============
         gotosocial =
           (
             with config.services.gotosocial;
@@ -36,17 +38,8 @@
             inherit (vars.gotosocial) endpoint;
           };
 
-        freshrss =
-          let
-            hostname = config.services.freshrss.virtualHost;
-            listen = builtins.elemAt config.services.nginx.virtualHosts."${hostname}".listen 0;
-          in
-          rec {
-            inherit hostname;
-            inherit (listen) addr port;
-            address = "${addr}:${toString port}";
-          };
-
+        # Private services
+        # ================
         searx =
           listen {
             domain = "${vars.searx.app.domain}";
@@ -65,6 +58,20 @@
           }
           // {
             inherit (vars.open-webui) endpoint;
+          };
+
+        freshrss =
+          let
+            inherit (config.services.freshrss) virtualHost;
+            inherit (builtins.elemAt config.services.nginx.virtualHosts."${virtualHost}".listen 0) addr port;
+          in
+          listen {
+            domain = virtualHost;
+            inherit addr;
+            inherit port;
+          }
+          // {
+            inherit (vars.freshrss) endpoint;
           };
       in
       {
@@ -90,17 +97,6 @@
           '';
         };
 
-        "${freshrss.hostname}" = {
-          listenAddresses = [ "100.72.114.65" ];
-          useACMEHost = "nyke.server.thotep.net";
-          logFormat = ''
-            output stdout
-          '';
-          extraConfig = ''
-            reverse_proxy ${freshrss.address}
-          '';
-        };
-
         # Private services
         # ================
         "${searx.endpoint.domain}" = {
@@ -122,6 +118,17 @@
           '';
           extraConfig = ''
             reverse_proxy ${open-webui.listen}
+          '';
+        };
+
+        "${freshrss.endpoint.domain}" = {
+          listenAddresses = [ freshrss.endpoint.addr ];
+          useACMEHost = "nyke.server.thotep.net";
+          logFormat = ''
+            output stdout
+          '';
+          extraConfig = ''
+            reverse_proxy ${freshrss.listen}
           '';
         };
       };

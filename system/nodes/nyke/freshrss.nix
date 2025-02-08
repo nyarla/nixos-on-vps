@@ -1,13 +1,15 @@
-{ config, pkgs, ... }:
+{ pkgs, specialArgs, ... }:
 let
-  virtualHost = "reader.nyke.server.thotep.net";
+  freshrss = specialArgs.vars.freshrss.endpoint;
+  virtualHost = freshrss.domain;
+  baseUrl = freshrss.https;
 in
 {
   services.freshrss = {
     enable = true;
     inherit virtualHost;
     database.type = "sqlite";
-    baseUrl = "https://reader.nyke.server.thotep.net";
+    inherit baseUrl;
     language = "ja";
 
     defaultUser = "kalaclista";
@@ -20,8 +22,7 @@ in
 
   services.nginx.virtualHosts."${virtualHost}".listen = [
     {
-      addr = "127.0.0.1";
-      port = 11080;
+      inherit (freshrss) addr port;
     }
   ];
 }
