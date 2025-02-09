@@ -12,6 +12,9 @@
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
 
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+
     sensitive.url = "git+file:sensitive";
   };
 
@@ -25,6 +28,8 @@
 
       impermanence,
       deploy-rs,
+
+      agenix,
 
       sensitive,
       ...
@@ -45,6 +50,7 @@
             })
             impermanence.nixosModules.impermanence
             sensitive.nixosModules.nyke
+            agenix.nixosModules.default
             ./system/profile/nyke.nix
           ];
         };
@@ -68,14 +74,19 @@
     // flake-utils.lib.eachDefaultSystem (system: rec {
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [ ];
+        overlays = [
+        ];
       };
 
       devShells.default = pkgs.mkShell {
         name = "nixos-on-vps";
-        packages = [
-          (pkgs.callPackage ./default.nix { })
-        ] ++ [ pkgs.deploy-rs ];
+        packages =
+          [
+            (pkgs.callPackage ./default.nix { })
+          ]
+          ++ [
+            pkgs.deploy-rs
+          ];
       };
     });
 }
