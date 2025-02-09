@@ -1,23 +1,23 @@
 all:
 	@echo hi,
 
-build:
-	@nix-build
+_IN_NIX_SHELL:
+	@test "$${IN_NIX_SHELL}" != "" || (echo 'Please enter to operation shell by `make shell`' >&2 ; exit 1)
 
-shell: build
-	nix shell nixpkgs#deploy-rs
+shell:
+	@nix develop
 
-sensitive: build
-	result/bin/nix flake update sensitive
+sensitive: _IN_NIX_SHELL
+	nix flake update sensitive
 
-bump: build
-	result/bin/nix flake update
+bump: _IN_NIX_SHELL
+	nix flake update
 
-boot: build
-	env PATH=$(shell pwd)/result/bin/nix:$$PATH deploy --boot .#nyke
+boot: _IN_NIX_SHELL
+	deploy --boot .#nyke
 
-dry-run: build
-	env PATH=$(shell pwd)/result/bin/nix:$$PATH deploy --dry-activate .#nyke
+dry-run: _IN_NIX_SHELL
+	deploy --dry-activate .#nyke
 
-up: build
-	env PATH=$(shell pwd)/result/bin/nix:$$PATH deploy .#nyke
+up: _IN_NIX_SHELL
+	deploy .#nyke

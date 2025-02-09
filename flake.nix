@@ -44,6 +44,19 @@
         };
       };
 
+      devShells.x86_64-linux.default =
+        let
+          inherit (nixpkgs.legacyPackages."x86_64-linux") pkgs;
+        in
+        pkgs.mkShell {
+          name = "nixos-on-vps";
+          packages =
+            [ pkgs.deploy-rs ]
+            ++ [
+              (pkgs.callPackage ./default.nix { })
+            ];
+        };
+
       deploy.nodes.nyke = {
         hostname = "nyke";
         sshUser = "console";
