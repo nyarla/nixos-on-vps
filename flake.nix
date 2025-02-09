@@ -1,5 +1,7 @@
 {
   inputs = {
+    flake-utils.url = "github:numtide/flake-utils";
+
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -16,10 +18,14 @@
   outputs =
     {
       self,
+      flake-utils,
+
       nixpkgs,
       unstable,
+
       impermanence,
       deploy-rs,
+
       sensitive,
       ...
     }:
@@ -44,19 +50,6 @@
         };
       };
 
-      devShells.x86_64-linux.default =
-        let
-          inherit (nixpkgs.legacyPackages."x86_64-linux") pkgs;
-        in
-        pkgs.mkShell {
-          name = "nixos-on-vps";
-          packages =
-            [ pkgs.deploy-rs ]
-            ++ [
-              (pkgs.callPackage ./default.nix { })
-            ];
-        };
-
       deploy.nodes.nyke = {
         hostname = "nyke";
         sshUser = "console";
@@ -71,5 +64,18 @@
       };
 
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-    };
+    }
+    // flake-utils.lib.eachDefaultSystem (system: rec {
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ ];
+      };
+
+      devShells.default = pkgs.mkShell {
+        name = "nixos-on-vps";
+        packages = [
+          (pkgs.callPackage ./default.nix { })
+        ] ++ [ pkgs.deploy-rs ];
+      };
+    });
 }
