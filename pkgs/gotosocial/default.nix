@@ -4,16 +4,16 @@
   fetchFromGitHub,
   fetchYarnDeps,
 
-  buildGo122Module,
+  buildGo123Module,
   mkYarnPackage,
 }:
 let
-  version = "v0.17.3+kalaclista";
+  version = "v0.18.0-rc1+kalaclista";
   src = fetchFromGitHub {
     owner = "nyarla";
     repo = "gotosocial-modded";
-    rev = "8b9e9df3085782084844587ba0e9d26b5935c72f";
-    hash = "sha256-vidRTWcStahzjDSHf1BPug4PvrhRSXkJmk+1SNHtgnQ=";
+    rev = "084f8ae99157e75183c6c21200ecb7618f927dc3";
+    hash = "sha256-lk9zdPUc8+PfkH4sX1UzUfp4ldfrZp7i+SoPDA26a7o=";
   };
 
   assets = runCommand "web" { } ''
@@ -29,7 +29,7 @@ let
     packageJSON = assets + /package.json;
     offlineCache = fetchYarnDeps {
       yarnLock = assets + /yarn.lock;
-      hash = "sha256-Sx2OaxwFqbT91BnumLxRB1fkvKOxzpkqlpF7RUoLX04=";
+      hash = "sha256-H2uysEsuxkPP6Pvu8r8A1aEA75z2/lx625FklZxSdnA=";
     };
 
     buildPhase = ''
@@ -58,7 +58,7 @@ let
   };
 
 in
-buildGo122Module rec {
+buildGo123Module rec {
   pname = "gotosocial";
   inherit version;
   inherit src;
