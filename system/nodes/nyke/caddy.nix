@@ -25,8 +25,14 @@
 
   services.caddy = {
     enable = true;
+    #package = pkgs.caddy-with-plugins;
     globalConfig = ''
       auto_https off
+
+      servers {
+        trusted_proxies static 127.0.0.1/32
+        client_ip_headers Cf-Connecting-Ip X-Forwarded-For
+      }
     '';
     virtualHosts =
       let

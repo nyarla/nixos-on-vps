@@ -20,7 +20,8 @@ in
       inherit (app) port;
 
       trusted-proxies = [
-        "127.0.0.1"
+        "127.0.0.1/32"
+        "::1"
       ];
 
       # db
