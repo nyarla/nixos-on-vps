@@ -5,8 +5,9 @@ buildGo123Module {
   src = fetchFromGitHub {
     owner = "benbjohnson";
     repo = "litestream";
-    rev = "2f22a4babf8bc19712b23bbb31d0ef6020cf78b0";
-    hash = "sha256-ZJFdWsqILyoNX1/hbX19HmMVdgFCxAN52wL+bcsQcJs=";
+    rev = "996a50deaf0350e4450053bf54a8e350f37116c4";
+    hash = "sha256-cVLPL+mkJ1hSwl1oD/zExRgvF2ofMXxAx7ZPWq7Zoms=";
+
   };
 
   vendorHash = "sha256-PlfDJbhzbH/ZgtQ35KcB6HtPEDTDgss7Lv8BcKT/Dgg=";
@@ -14,7 +15,7 @@ buildGo123Module {
   ldflags = [
     "-s"
     "-w"
-    "-X main.Version=2f22a4b"
+    "-X main.Version=996a50d"
   ];
 
   tags = [
