@@ -102,6 +102,9 @@
     "/nix"
     "/tmp"
 
+    "/persist/etc"
+    "/persist/root"
+
     "/persist/var/db"
     "/persist/var/lib"
     "/persist/var/log"
