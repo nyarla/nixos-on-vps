@@ -98,6 +98,7 @@
     ]);
 
   services.btrfs.autoScrub.enable = true;
+  services.btrfs.autoScrub.interval = "Sat *-*-* 23:00:00";
   services.btrfs.autoScrub.fileSystems = [
     "/nix"
     "/tmp"
@@ -110,6 +111,8 @@
     "/persist/var/log"
   ];
 
+  services.snapper.snapshotInterval = "*-*-* 04:00:00";
+  services.snapper.cleanupInterval = "*-*-1 00:00:00";
   services.snapper.configs =
     let
       snapshot = path: {
