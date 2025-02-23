@@ -8,4 +8,6 @@ _: prev: {
       cp ${prev.freshrss-flaresolverr-extension}/share/freshrss/extensions/xExtension-FlareSolverr/cloudsolver.php $out/p/api/
     '';
   });
+
+  inherit (unstable) open-webui searxng;
 }
