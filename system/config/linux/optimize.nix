@@ -1,4 +1,7 @@
 _: {
+  boot.kernelParams = [
+    "transparent_hugepage=never"
+  ];
   boot.kernelModules = [ "tcp_bbr" ];
 
   boot.kernel.sysctl = {
