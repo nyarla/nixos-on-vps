@@ -13,6 +13,9 @@ sensitive: _IN_NIX_SHELL
 bump: _IN_NIX_SHELL
 	nix flake update
 
+build:
+	nixos-rebuild build --flake .#nyke
+
 boot: _IN_NIX_SHELL
 	deploy --boot .#nyke
 
