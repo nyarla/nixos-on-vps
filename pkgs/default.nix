@@ -7,6 +7,20 @@ rec {
   gotosocial = require ./gotosocial { };
   litestream = require ./litestream { };
 
+  freshrss = prev.freshrss.overrideAttrs (_: rec {
+    version = "1.26.0";
+    src = prev.fetchFromGitHub {
+      owner = "FreshRSS";
+      repo = "FreshRSS";
+      rev = version;
+      hash = "sha256-J3YYx2enB8NHxgWUcJHStd5LkGRIB6dx3avbjhyIs3Q=";
+    };
+
+    postInstall = ''
+      cp ${final.freshrss-flaresolverr-extension}/share/freshrss/extensions/xExtension-FlareSolverr/cloudsolver.php $out/p/api/
+    '';
+  });
+
   pixelfed = (prev.pixelfed.override { php = prev.php83; }).overrideAttrs (_: {
     version = "0.12.4";
     src = prev.fetchFromGitHub {
