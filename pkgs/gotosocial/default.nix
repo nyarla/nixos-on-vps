@@ -8,13 +8,12 @@
   mkYarnPackage,
 }:
 let
-  version = "v0.18.0+kalaclista";
+  version = "v0.18.3+kalaclista";
   src = fetchFromGitHub {
     owner = "nyarla";
     repo = "gotosocial-modded";
-    rev = "80d157831a8b03139f60ef8c4a6d542800a308b9";
-    hash = "sha256-kyA41uFSYQfPLaiMA7/8TTQe99uKAu7cTTYRQY8XSqA=";
-
+    rev = "bcf3da36bee99413d8cf8737a53d2823d008d1b5";
+    hash = "sha256-LQZ4fUXlSG4IrXi1KsUAii8F0FTLAZsbXyMqJoo4Nts=";
   };
 
   assets = runCommand "web" { } ''
