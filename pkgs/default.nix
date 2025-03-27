@@ -8,12 +8,12 @@ rec {
   litestream = require ./litestream { };
 
   freshrss = prev.freshrss.overrideAttrs (_: rec {
-    version = "1.26.0";
+    version = "1.26.1";
     src = prev.fetchFromGitHub {
       owner = "FreshRSS";
       repo = "FreshRSS";
       rev = version;
-      hash = "sha256-J3YYx2enB8NHxgWUcJHStd5LkGRIB6dx3avbjhyIs3Q=";
+      hash = "sha256-hgkFNZg+A1cF+xh17d2n4SCvxTZm/Eryj6jP7MvnpTE=";
     };
 
     postInstall = ''
@@ -21,7 +21,7 @@ rec {
     '';
   });
 
-  pixelfed = (prev.pixelfed.override { php = prev.php83; }).overrideAttrs (_: {
+  pixelfed = prev.pixelfed.overrideAttrs (_: {
     version = "0.12.5";
     src = prev.fetchFromGitHub {
       owner = "pixelfed";
