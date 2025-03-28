@@ -7,7 +7,7 @@
   services.litestream = {
     enable = true;
     # TODO: provide by agenix?
-    environmentFile = "/etc/secrets/litestream/env";
+    environmentFile = config.age.secrets.litestream.path;
     settings = {
       dbs = [
         {

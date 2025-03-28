@@ -16,7 +16,7 @@ in
     set -xeuo pipefail
     declare -r date=$(date +%Y-%m-%d)
 
-    cd "${location}" && env $(cat /etc/secrets/mysql/env) s5cmd mv '*.gz' s3://kalaclista-backup-mysql/''${date}/
+    cd "${location}" && env $(cat ${config.age.secrets.mysql-backup.path}) s5cmd mv '*.gz' s3://kalaclista-backup-mysql/''${date}/
 
     exit 0
   '';

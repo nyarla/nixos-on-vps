@@ -86,6 +86,7 @@
           ]
           ++ [
             pkgs.deploy-rs
+            agenix.packages.${system}.default
           ];
       };
     });

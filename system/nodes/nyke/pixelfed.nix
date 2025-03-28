@@ -1,4 +1,9 @@
-{ pkgs, specialArgs, ... }:
+{
+  pkgs,
+  config,
+  specialArgs,
+  ...
+}:
 let
   inherit (specialArgs.vars.pixelfed) endpoint;
 in
@@ -20,7 +25,7 @@ in
 
       PF_LOCAL_AVATAR_TO_CLOUD = true;
     };
-    secretFile = "/etc/secrets/pixelfed/env";
+    secretFile = config.age.secrets.pixelfed.path;
     database.createLocally = true;
     redis.createLocally = true;
     phpPackage = pkgs.php83;

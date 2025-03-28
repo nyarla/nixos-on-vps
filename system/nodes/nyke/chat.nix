@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   specialArgs,
   ...
 }:
@@ -14,8 +15,21 @@ in
     enable = true;
     host = webui.addr;
     inherit (webui) port;
-    environmentFile = "/etc/secrets/open-webui/env";
+    environmentFile = config.age.secrets.open-webui.path;
   };
+
+  # workaround for agenix secrets
+  systemd.services.open-webui.serviceConfig = {
+    User = "open-webui";
+    Group = "open-webui";
+    DynamicUser = lib.mkForce false;
+    PrivateUsers = lib.mkForce false;
+  };
+  users.users.open-webui = {
+    group = "open-webui";
+    isSystemUser = true;
+  };
+  users.groups.open-webui = { };
 
   # Searxng
   systemd.services.searx.serviceConfig.ExecStartPre = pkgs.writeShellScript "searx-prestart" ''
@@ -24,7 +38,7 @@ in
   services.searx = {
     enable = true;
     redisCreateLocally = true;
-    environmentFile = "/etc/secrets/searxng/env";
+    environmentFile = config.age.secrets.searx.path;
     limiterSettings = {
       real_ip = {
         x_for = 1;

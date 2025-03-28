@@ -1,7 +1,8 @@
-_: {
+{ config, lib, ... }:
+{
   services.mackerel-agent = {
     enable = true;
-    apiKeyFile = "/var/lib/mackerel-agent/apikey";
+    apiKeyFile = config.age.secrets.mackerel-agent.path;
     settings = {
       display_name = "Nyke";
       cloud_platform = "none";
@@ -14,4 +15,15 @@ _: {
       };
     };
   };
+
+  systemd.services.mackerel-agent.serviceConfig = {
+    User = "mackerel-agent";
+    Group = "mackerel-agent";
+    DynamicUser = lib.mkForce false;
+  };
+  users.users.mackerel-agent = {
+    isSystemUser = true;
+    group = "mackerel-agent";
+  };
+  users.groups.mackerel-agent = { };
 }

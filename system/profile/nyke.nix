@@ -20,6 +20,7 @@
     ../nodes/nyke/pixelfed.nix
 
     ../nodes/nyke/backup.nix
+    ../secrets/nyke/default.nix
   ];
 
   # hostname
@@ -143,7 +144,6 @@
     hideMounts = true;
     directories = [
       "/etc/ssh"
-      "/etc/secrets"
       "/etc/backup"
 
       "/var/db"

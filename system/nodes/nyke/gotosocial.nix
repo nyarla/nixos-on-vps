@@ -1,4 +1,4 @@
-{ specialArgs, ... }:
+{ config, specialArgs, ... }:
 let
   inherit (specialArgs.vars.gotosocial) app;
 in
@@ -63,7 +63,6 @@ in
       kalaclista-allowed-unauthorized-get = true;
       kalaclista-keep-emojis-forever = true;
     };
-    # TODO: provide by agenix?
-    environmentFile = "/etc/secrets/gotosocial/env";
+    environmentFile = config.age.secrets.gotosocial.path;
   };
 }

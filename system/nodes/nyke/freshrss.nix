@@ -1,4 +1,9 @@
-{ pkgs, specialArgs, ... }:
+{
+  pkgs,
+  config,
+  specialArgs,
+  ...
+}:
 let
   freshrss = specialArgs.vars.freshrss.endpoint;
   virtualHost = freshrss.domain;
@@ -13,7 +18,7 @@ in
     language = "ja";
 
     defaultUser = "kalaclista";
-    passwordFile = "/etc/secrets/freshrss/kalaclista";
+    passwordFile = config.age.secrets.freshrss.path;
 
     extensions = with pkgs; [
       freshrss-flaresolverr-extension
