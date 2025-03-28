@@ -4,22 +4,21 @@
   specialArgs,
   ...
 }:
+let
+  waitForTailscaleIP = ''
+    while [[ -z "$(${pkgs.tailscale}/bin/tailscale ip | head -n1)" ]]; do
+      sleep 1
+    done
+  '';
+in
+
 {
-  # TODO:
-  # temporary workaround for wait to tailscale ip is up
-  # this section should be a systemd.target file?
-  systemd.services.nginx.serviceConfig.ExecStartPre = toString (
-    pkgs.writeShellScript "wait.sh" ''
-      while [[ -z "$(${pkgs.tailscale}/bin/tailscale ip | head -n1)" ]]; do
-        sleep 1
-      done
-    ''
-  );
+  systemd.services.nginx.preStart = ''
+    ${waitForTailscaleIP}
+  '';
   systemd.services.caddy.serviceConfig.ExecStartPre = toString (
-    pkgs.writeShellScript "wait.sh" ''
-      while [[ -z "$(${pkgs.tailscale}/bin/tailscale ip | head -n1)" ]]; do
-        sleep 1
-      done
+    pkgs.writeShellScript "preStart.sh" ''
+      ${waitForTailscaleIP}
     ''
   );
 
