@@ -1,6 +1,9 @@
 {
   inputs = {
+    systems.url = "github:nix-systems/default";
+
     flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.inputs.systems.follows = "systems";
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11-small";
     nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
@@ -11,9 +14,11 @@
 
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+    deploy-rs.inputs.utils.follows = "flake-utils";
 
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.systems.follows = "systems";
 
     sensitive.url = "git+file:sensitive";
   };
