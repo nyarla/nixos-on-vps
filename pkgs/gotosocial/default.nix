@@ -8,12 +8,12 @@
   mkYarnPackage,
 }:
 let
-  version = "v0.18.3+kalaclista";
+  version = "v0.19.0+kalaclista";
   src = fetchFromGitHub {
     owner = "nyarla";
-    repo = "gotosocial-modded";
-    rev = "bcf3da36bee99413d8cf8737a53d2823d008d1b5";
-    hash = "sha256-LQZ4fUXlSG4IrXi1KsUAii8F0FTLAZsbXyMqJoo4Nts=";
+    repo = "gotosocial-kalaclista";
+    rev = "04b6dbaa8f79cbc5d99686a9b602b8f0b10a0b04";
+    hash = "sha256-DSbAH3AqgNm6GtX/0wZrBE/9pnetf3GZ/rUrQGK2a2Y=";
   };
 
   assets = runCommand "web" { } ''
@@ -29,7 +29,7 @@ let
     packageJSON = assets + /package.json;
     offlineCache = fetchYarnDeps {
       yarnLock = assets + /yarn.lock;
-      hash = "sha256-n+4q/1hMzBEsMuBItld0ziAYiBDx3S0EAWojqsfFA38=";
+      hash = "sha256-hWWe3vJp1IXHCZOUAsjjQDEFqZgyjUVFe082dvEKPVw=";
     };
 
     buildPhase = ''
