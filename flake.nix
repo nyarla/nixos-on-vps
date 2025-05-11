@@ -20,7 +20,8 @@
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.systems.follows = "systems";
 
-    sensitive.url = "git+file:sensitive";
+    self.submodules = true;
+    sensitive.url = ./sensitive;
   };
 
   outputs =
@@ -92,6 +93,9 @@
           ++ [
             pkgs.deploy-rs
             agenix.packages.${system}.default
+          ]
+          ++ [
+            (pkgs.nixos-rebuild.override { nix = pkgs.nixVersions.git; })
           ];
       };
     });
