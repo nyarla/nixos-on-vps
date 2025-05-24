@@ -53,6 +53,7 @@
                 (import ./pkgs/default.nix)
                 (import ./pkgs/unstable.nix { inherit (unstable.legacyPackages."x86_64-linux") pkgs; })
               ];
+              nixpkgs.config.allowUnfree = true;
             })
             impermanence.nixosModules.impermanence
             sensitive.nixosModules.nyke
@@ -80,8 +81,8 @@
     // flake-utils.lib.eachDefaultSystem (system: rec {
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [
-        ];
+        overlays = [ ];
+        config.allowUnfree = true;
       };
 
       devShells.default = pkgs.mkShell {
