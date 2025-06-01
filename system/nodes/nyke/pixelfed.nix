@@ -38,4 +38,20 @@ in
       ];
     };
   };
+
+  systemd.services =
+    let
+      extraPrograms = with pkgs; [
+        libwebp
+        libavif
+        nodePackages.svgo
+      ];
+    in
+    {
+      phpfpm-pixelfed.path = extraPrograms;
+      pixelfed-horizon.path = extraPrograms;
+      pixelfed-cron.path = extraPrograms;
+      pixelfed-data-setup.path = extraPrograms;
+    };
+
 }
