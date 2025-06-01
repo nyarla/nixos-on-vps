@@ -6,31 +6,9 @@
   ...
 }:
 let
-  webui = specialArgs.vars.open-webui.app;
   searx = specialArgs.vars.searx.app;
 in
 {
-  # Open Web UI
-  services.open-webui = {
-    enable = true;
-    host = webui.addr;
-    inherit (webui) port;
-    environmentFile = config.age.secrets.open-webui.path;
-  };
-
-  # workaround for agenix secrets
-  systemd.services.open-webui.serviceConfig = {
-    User = "open-webui";
-    Group = "open-webui";
-    DynamicUser = lib.mkForce false;
-    PrivateUsers = lib.mkForce false;
-  };
-  users.users.open-webui = {
-    group = "open-webui";
-    isSystemUser = true;
-  };
-  users.groups.open-webui = { };
-
   # Searxng
   systemd.services.searx.serviceConfig.ExecStartPre = pkgs.writeShellScript "searx-prestart" ''
     cd /run/searx && ln -sf /etc/searxng/limiter.toml limiter.toml

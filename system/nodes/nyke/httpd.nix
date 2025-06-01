@@ -59,8 +59,8 @@ in
         # Private services
         # ================
 
-        # Search and Chat
-        # ---------------
+        # Search
+        # ------
         searx =
           listen {
             domain = "${vars.searx.app.domain}";
@@ -69,16 +69,6 @@ in
           }
           // {
             inherit (vars.searx) endpoint;
-          };
-
-        open-webui =
-          listen {
-            inherit (vars.open-webui.endpoint) domain;
-            addr = config.services.open-webui.host;
-            inherit (config.services.open-webui) port;
-          }
-          // {
-            inherit (vars.open-webui) endpoint;
           };
 
         # RSS Reader
@@ -137,15 +127,6 @@ in
           inherit logFormat;
           extraConfig = ''
             reverse_proxy ${searx.listen}
-          '';
-        };
-
-        "${open-webui.endpoint.domain}" = {
-          listenAddresses = [ open-webui.endpoint.addr ];
-          inherit useACMEHost;
-          inherit logFormat;
-          extraConfig = ''
-            reverse_proxy ${open-webui.listen}
           '';
         };
 

@@ -85,24 +85,6 @@ in
       };
     };
 
-  open-webui =
-    let
-      domain = "chat.nyke.server.thotep.net";
-    in
-    {
-      app = listen {
-        inherit domain;
-        addr = localhost;
-        port = 30180;
-      };
-
-      endpoint = listen {
-        inherit domain;
-        addr = internal;
-        port = 40180;
-      };
-    };
-
   freshrss =
     let
       domain = "reader.nyke.server.thotep.net";

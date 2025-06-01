@@ -5,10 +5,6 @@
   };
 
   # chat
-  open-webui = {
-    owner = "open-webui";
-    group = "open-webui";
-  };
   searx = {
     owner = "searx";
     group = "searx";
