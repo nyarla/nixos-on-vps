@@ -21,16 +21,16 @@ rec {
     '';
   });
 
-  pixelfed = prev.pixelfed.overrideAttrs (_: {
+  pixelfed = prev.pixelfed.overrideDerivation (_: {
     version = "0.12.6-dev";
     src = prev.fetchFromGitHub {
       owner = "pixelfed";
       repo = "pixelfed";
-      rev = "18d1c1a938c2d1ae23d3555269d5435648a0ec3a";
-      hash = "sha256-sl1cxcq0eZuoI3hwAe8MtZ3o4hqBuu1EYBgA5hQ5cE4=";
+      rev = "aba85566f26939a3c3045548153dcbaa66ac01be";
+      hash = "sha256-7Wm3ykUwlCuZe3JDLpQfxwYAIub/f6hc4LQfbNeD13w=";
     };
 
-    vendorHash = "sha256-l3zG0t7XRpfCNi2HqsxtPlL5ZTbgzOlOqoaEQ4R1kG0=";
+    vendorHash = "sha256-eyIHvLGQrkJUs/BUINaJTnr1eatGGZBYeq5ioJAUaEk=";
   });
 
   nyke-reboot = require ./nyke-reboot { };
