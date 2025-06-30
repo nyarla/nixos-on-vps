@@ -5,10 +5,11 @@
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11-small";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05-small";
     nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
 
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+    unstable.inputs.nixpkgs.follows = "unstable";
 
     impermanence.url = "github:nix-community/impermanence";
 
@@ -50,8 +51,8 @@
           modules = [
             (_: {
               nixpkgs.overlays = [
-                (import ./pkgs/default.nix)
                 (import ./pkgs/unstable.nix { inherit (unstable.legacyPackages."x86_64-linux") pkgs; })
+                (import ./pkgs/default.nix)
               ];
               nixpkgs.config.allowUnfree = true;
             })
@@ -96,7 +97,7 @@
             agenix.packages.${system}.default
           ]
           ++ [
-            (pkgs.nixos-rebuild.override { nix = pkgs.nixVersions.git; })
+            (pkgs.nixos-rebuild.override { nix = pkgs.nixVersions.nix_2_28; })
           ];
       };
     });

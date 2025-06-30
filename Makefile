@@ -5,7 +5,7 @@ _IN_NIX_SHELL:
 	@test "$${IN_NIX_SHELL}" != "" || (echo 'Please enter to operation shell by `make shell`' >&2 ; exit 1)
 
 shell:
-	@nix shell nixpkgs#nixVersions.git --command env NIXPKGS_ALLOW_UNFREE=1 nix develop --impure
+	@nix shell nixpkgs#nixVersions.nix_2_28 --command env NIXPKGS_ALLOW_UNFREE=1 nix develop --impure
 
 sensitive: _IN_NIX_SHELL
 	nix flake update sensitive
