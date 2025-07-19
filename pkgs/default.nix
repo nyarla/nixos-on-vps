@@ -26,8 +26,8 @@ rec {
     src = prev.fetchFromGitHub {
       owner = "pixelfed";
       repo = "pixelfed";
-      rev = "c9808358ed2398fa645bf502997e12c6470eeb80";
-      hash = "sha256-DjaExQu9vM2aa60Iun/Gr1ynSQ121wg7Op0LTOWVJlA=";
+      rev = "81858a8d20e8871638ed55019803a4bd1e2af6ae";
+      hash = "sha256-Apxwf0KkU1PekcSTIp2Yu8IsSkFFN1QQVD3ikfb14uw=";
     };
   });
 
