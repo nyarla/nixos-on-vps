@@ -26,11 +26,9 @@ rec {
     src = prev.fetchFromGitHub {
       owner = "pixelfed";
       repo = "pixelfed";
-      rev = "aba85566f26939a3c3045548153dcbaa66ac01be";
-      hash = "sha256-7Wm3ykUwlCuZe3JDLpQfxwYAIub/f6hc4LQfbNeD13w=";
+      rev = "c9808358ed2398fa645bf502997e12c6470eeb80";
+      hash = "sha256-DjaExQu9vM2aa60Iun/Gr1ynSQ121wg7Op0LTOWVJlA=";
     };
-
-    vendorHash = "sha256-eyIHvLGQrkJUs/BUINaJTnr1eatGGZBYeq5ioJAUaEk=";
   });
 
   nyke-reboot = require ./nyke-reboot { };
