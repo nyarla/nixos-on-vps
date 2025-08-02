@@ -21,15 +21,41 @@ rec {
     '';
   });
 
-  pixelfed = prev.pixelfed.overrideDerivation (_: {
-    version = "0.12.6-dev";
-    src = prev.fetchFromGitHub {
-      owner = "pixelfed";
-      repo = "pixelfed";
-      rev = "81858a8d20e8871638ed55019803a4bd1e2af6ae";
-      hash = "sha256-Apxwf0KkU1PekcSTIp2Yu8IsSkFFN1QQVD3ikfb14uw=";
-    };
-  });
+  pixelfed = prev.callPackage (
+    {
+      fetchFromGitHub,
+      php,
+      dataDir ? "/var/lib/pixelfed",
+      runtimeDir ? "/run/pixelfed",
+      ...
+    }:
+    php.buildComposerProject2 (finalAttrs: {
+      pname = "pixelfed";
+      version = "0.12.6-dev";
+      src = fetchFromGitHub {
+        owner = "pixelfed";
+        repo = "pixelfed";
+        rev = "5921c51db990ffa57e4afc52440290dd5afb9b96";
+        hash = "sha256-h4AkaFhFlQ7Dc4R6tRJtN3reBXWEwWogNpe7hmVEgNg=";
+      };
+
+      vendorHash = "sha256-qMRkJAbVG7Gbyqy3dFfwwFqSA5t8GDFnV0WucJIMxDs=";
+
+      postInstall = ''
+        chmod -R u+w $out/share
+        mv "$out/share/php/${finalAttrs.pname}"/* $out
+        rm -R $out/bootstrap/cache
+        # Move static contents for the NixOS module to pick it up, if needed.
+        mv $out/bootstrap $out/bootstrap-static
+        mv $out/storage $out/storage-static
+        ln -s ${dataDir}/.env $out/.env
+        ln -s ${dataDir}/storage $out/
+        ln -s ${dataDir}/storage/app/public $out/public/storage
+        ln -s ${runtimeDir} $out/bootstrap
+        chmod +x $out/artisan
+      '';
+    })
+  ) { };
 
   nyke-reboot = require ./nyke-reboot { };
 }
