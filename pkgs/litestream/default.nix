@@ -1,21 +1,20 @@
-{ fetchFromGitHub, buildGo123Module }:
-buildGo123Module {
+{ fetchFromGitHub, buildGo124Module }:
+buildGo124Module {
   pname = "litestream";
   version = "git";
   src = fetchFromGitHub {
     owner = "benbjohnson";
     repo = "litestream";
-    rev = "996a50deaf0350e4450053bf54a8e350f37116c4";
-    hash = "sha256-cVLPL+mkJ1hSwl1oD/zExRgvF2ofMXxAx7ZPWq7Zoms=";
-
+    rev = "6c35001a521ef832f83b45c4e056cfd719455086";
+    hash = "sha256-kwioOomGZAqmY5jvpCSPjp1JHmYrULl7LR6cvtOopuw=";
   };
 
-  vendorHash = "sha256-PlfDJbhzbH/ZgtQ35KcB6HtPEDTDgss7Lv8BcKT/Dgg=";
+  vendorHash = "sha256-mpFiTONT27MdZNwAY+DNNWoY+fKDIddRitSzns1R8B8=";
 
   ldflags = [
     "-s"
     "-w"
-    "-X main.Version=996a50d"
+    "-X main.Version=6c35001"
   ];
 
   tags = [
