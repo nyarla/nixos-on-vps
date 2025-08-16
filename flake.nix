@@ -22,7 +22,7 @@
     agenix.inputs.systems.follows = "systems";
 
     self.submodules = true;
-    sensitive.url = ./sensitive;
+    sensitive.url = "git+file:sensitive?submodules=1";
   };
 
   outputs =
@@ -88,17 +88,13 @@
 
       devShells.default = pkgs.mkShell {
         name = "nixos-on-vps";
-        packages =
-          [
-            (pkgs.callPackage ./default.nix { })
-          ]
-          ++ [
-            pkgs.deploy-rs
-            agenix.packages.${system}.default
-          ]
-          ++ [
-            (pkgs.nixos-rebuild.override { nix = pkgs.nixVersions.nix_2_28; })
-          ];
+        packages = [
+          pkgs.deploy-rs
+          agenix.packages.${system}.default
+        ]
+        ++ [
+          (pkgs.nixos-rebuild.override { nix = pkgs.nixVersions.nix_2_28; })
+        ];
       };
     });
 }
