@@ -6,8 +6,8 @@ freshrss-extensions.buildFreshRssExtension {
   src = fetchFromGitHub {
     owner = "ravenscroftj";
     repo = "freshrss-flaresolverr-extension";
-    rev = "ae9027337153942d8ef5f24d040171bdbf43345c";
-    hash = "sha256-JNLDMay1kPRhkgtWXIHYxlOMz3ngw8u5MDJRkSp+lqg=";
+    rev = "abd66220c18231b6c159c98db650dec436560d4d";
+    hash = "sha256-KFPyBqHHdVCGxIfTpLS4R3PfMTKJg7X2kEhgIwodGUc=";
   };
 
   preBuild = ''
