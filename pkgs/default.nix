@@ -35,11 +35,11 @@ rec {
       src = fetchFromGitHub {
         owner = "pixelfed";
         repo = "pixelfed";
-        rev = "5921c51db990ffa57e4afc52440290dd5afb9b96";
-        hash = "sha256-h4AkaFhFlQ7Dc4R6tRJtN3reBXWEwWogNpe7hmVEgNg=";
+        rev = "fddfb6a7129393ea9ad9a6c49ba23db6798025ad";
+        hash = "sha256-s44Iy3/25R8PcN62Ve2F4wwwvqf6DdkdoS280QzEZFk=";
       };
 
-      vendorHash = "sha256-qMRkJAbVG7Gbyqy3dFfwwFqSA5t8GDFnV0WucJIMxDs=";
+      vendorHash = "sha256-tcDWSsQXfuBZoCuWnN6+hPM9SjtbZVUUTOnvj//BfOA=";
 
       postInstall = ''
         chmod -R u+w $out/share
