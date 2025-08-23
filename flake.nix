@@ -94,6 +94,8 @@
         ]
         ++ [
           (pkgs.nixos-rebuild.override { nix = pkgs.nixVersions.nix_2_28; })
+          (pkgs.callPackage (import ./pkgs/litestream) { })
+          pkgs.s5cmd
         ];
       };
     });
