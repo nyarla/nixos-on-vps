@@ -31,15 +31,15 @@ rec {
     }:
     php.buildComposerProject2 (finalAttrs: {
       pname = "pixelfed";
-      version = "0.12.6-dev";
+      version = "0.12.6-dev"; # 2025-09-02
       src = fetchFromGitHub {
         owner = "pixelfed";
         repo = "pixelfed";
-        rev = "fddfb6a7129393ea9ad9a6c49ba23db6798025ad";
-        hash = "sha256-s44Iy3/25R8PcN62Ve2F4wwwvqf6DdkdoS280QzEZFk=";
+        rev = "e2fc2ceee8343b0a6dfb006234f9e8ffa0327e9e";
+        hash = "sha256-j7hO4yTYZK6bKLgKYoJDJOiVPelup1hbvioOkTLRUZE=";
       };
 
-      vendorHash = "sha256-tcDWSsQXfuBZoCuWnN6+hPM9SjtbZVUUTOnvj//BfOA=";
+      vendorHash = "sha256-9kqkqqsMEvipYKLgNNAd7YsbYihbQ6fukKZgtyGAddA=";
 
       postInstall = ''
         chmod -R u+w $out/share
