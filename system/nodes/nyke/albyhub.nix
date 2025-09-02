@@ -6,7 +6,7 @@ in
 {
   virtualisation.oci-containers.containers."albyhub" = {
     autoStart = true;
-    image = "ghcr.io/getalby/hub:v1.18.5";
+    image = "ghcr.io/getalby/hub:v1.19.3";
     ports = [
       "${listen}:8080"
     ];
