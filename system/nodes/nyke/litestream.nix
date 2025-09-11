@@ -4,6 +4,9 @@
   # this is workaround for permission issue
   systemd.services.litestream.serviceConfig.User = lib.mkForce "root";
   systemd.services.litestream.serviceConfig.Group = lib.mkForce "root";
+
+  systemd.services.litestream.serviceConfig.CPUQuota = "20%";
+
   services.litestream = {
     enable = true;
     # TODO: provide by agenix?
