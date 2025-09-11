@@ -30,4 +30,6 @@ in
       inherit (freshrss) addr port;
     }
   ];
+
+  systemd.services.freshrss-updater.serviceConfig.CPUQuota = "50%";
 }
