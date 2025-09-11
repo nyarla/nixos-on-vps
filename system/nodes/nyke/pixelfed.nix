@@ -24,6 +24,9 @@ in
       OAUTH_ENABLED = true;
 
       PF_LOCAL_AVATAR_TO_CLOUD = true;
+
+      # System configuration
+      HORIZON_MAX_PROCESSES = 4;
     };
     secretFile = config.age.secrets.pixelfed.path;
     database.createLocally = true;
