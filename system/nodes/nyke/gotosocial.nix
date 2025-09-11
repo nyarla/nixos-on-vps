@@ -55,6 +55,7 @@ in
 
       # advanced
       advanced-throttling-multiplier = 4;
+      advanced-sender-multiplier = 2;
       advanced-csp-extra-uris = [
         "gts.files.kalaclista.com"
       ];
