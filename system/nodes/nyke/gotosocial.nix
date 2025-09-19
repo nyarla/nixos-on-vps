@@ -62,6 +62,7 @@ in
 
       # kalaclista
       kalaclista-allowed-unauthorized-get = true;
+      kalaclista-turnoff-authozied-fetch = true;
       kalaclista-keep-emojis-forever = true;
     };
     environmentFile = config.age.secrets.gotosocial.path;
