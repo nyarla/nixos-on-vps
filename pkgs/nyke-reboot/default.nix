@@ -1,40 +1,66 @@
-{ writeShellScriptBin }:
-writeShellScriptBin "nyke-reboot" ''
-  stop() {
-    sudo systemctl stop $@
-  }
+{ writeShellScriptBin, symlinkJoin }:
+let
+  stopService = ''
+    stop() {
+      sudo systemctl stop $@
+    }
 
-  if [[ "$(hostname)" != "nyke" ]]; then
-    echo 'This machine is not `nyke`.' >&2;
-    exit 1
-  fi
+    # metric service
+    stop mackerel-agent.service
 
-  sudo echo 'Reboot system'
+    # endpoint http server
+    stop caddy.service
+    stop nginx.service
 
-  set -x
+    # gotosocial
+    stop gotosocial.service
+    stop litestream.service
 
-  # endpoint http server
-  stop caddy.service
-  stop nginx.service
+    # albyhub
+    stop podman-albyhub
 
-  # gotosocial
-  stop gotosocial.service
-  stop litestream.service
+    # freshrss
+    stop freshrss-updater.timer
+    stop freshrss-updater.service
+    stop phpfpm-freshrss.service
 
-  # albyhub
-  stop podman-albyhub
+    # pixelfed
+    stop phpfpm-pixelfed.service
+    stop pixelfed-cron.timer
+    stop pixelfed-horizon.service
+    stop redis-pixelfed.service
+  '';
 
-  # freshrss
-  stop freshrss-updater.timer
-  stop freshrss-updater.service
-  stop phpfpm-freshrss.service
+  nyke-reboot = writeShellScriptBin "nyke-reboot" ''
+    if [[ "$(hostname)" != "nyke" ]]; then
+      echo 'This machine is not `nyke`.' >&2;
+      exit 1
+    fi
 
-  # pixelfed
-  stop phpfpm-pixelfed.service
-  stop pixelfed-cron.timer
-  stop pixelfed-horizon.service
-  stop redis-pixelfed.service
+    sudo echo 'Reboot system'
 
-  # reboot system
-  sudo systemctl reboot
-''
+    ${stopService}
+
+    sudo systemctl reboot
+  '';
+
+  nyke-shutdown = writeShellScriptBin "nyke-shutdown" ''
+    if [[ "$(hostname)" != "nyke" ]]; then
+      echo 'This machine is not `nyke`.' >&2;
+      exit 1
+    fi
+
+    sudo echo 'Shutdown system'
+
+    ${stopService}
+
+    sudo shutdown -h now
+  '';
+in
+symlinkJoin {
+  name = "nyke-reboot";
+  paths = [
+    nyke-reboot
+    nyke-shutdown
+  ];
+}
