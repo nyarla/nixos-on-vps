@@ -113,7 +113,7 @@
   ];
 
   services.snapper.snapshotInterval = "*-*-* 04:00:00";
-  services.snapper.cleanupInterval = "*-*-1 00:00:00";
+  services.snapper.cleanupInterval = "Fri *-*-* 00:00:00";
   services.snapper.configs =
     let
       snapshot = path: {
