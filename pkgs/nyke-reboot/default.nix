@@ -5,6 +5,8 @@ let
       sudo systemctl stop $@
     }
 
+    set -x
+
     # metric service
     stop mackerel-agent.service
 
@@ -29,6 +31,8 @@ let
     stop pixelfed-cron.timer
     stop pixelfed-horizon.service
     stop redis-pixelfed.service
+
+    set +x
   '';
 
   nyke-reboot = writeShellScriptBin "nyke-reboot" ''
