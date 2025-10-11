@@ -8,12 +8,12 @@ rec {
   litestream = require ./litestream { };
 
   freshrss = prev.freshrss.overrideAttrs (_: rec {
-    version = "1.27.0";
+    version = "1.27.1";
     src = prev.fetchFromGitHub {
       owner = "FreshRSS";
       repo = "FreshRSS";
       rev = version;
-      hash = "sha256-jz9MFWkZBjiBu6jr1jp+bDpthB/OWE0pfrXhY5B08Jo=";
+      hash = "sha256-EpszwgYzobRA7LohtJJtgTefFAEmCXvcP3ilfsu+obo=";
     };
 
     postInstall = ''
